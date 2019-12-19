@@ -1,0 +1,9 @@
+[submodule "nflxprofile"]
+	path = deps/nflxprofile
+	url = git@github.com:Netflix/nflxprofile
+[submodule "protobuf-c"]
+	path = deps/protobuf-c
+	url = git@github.com:protobuf-c/protobuf-c.git
+[submodule "deps/parson"]
+	path = deps/parson
+	url = git@github.com:mmarchini/parson.git

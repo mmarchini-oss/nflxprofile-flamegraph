@@ -1,0 +1,23 @@
+{
+  "name": "nflxprofile-flamegraph",
+  "version": "0.1.0",
+  "description": "Experimental nflxprofile flamegraph on browser, using Webassembly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmarchini/nflxprofile-flamegraph.git"
+  },
+  "author": "Matheus Marchini <mmarchini@netflix.com>",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/mmarchini/nflxprofile-flamegraph/issues"
+  },
+  "homepage": "https://github.com/mmarchini/nflxprofile-flamegraph#readme",
+  "dependencies": {
+    "d3": "^5.14.2",
+    "d3-flame-graph": "^2.1.8"
+  }
+}

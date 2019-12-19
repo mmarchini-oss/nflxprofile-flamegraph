@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>nflxprofile Flamegraph Demo</title>
+    <link rel="stylesheet" type="text/css" href="/node_modules/d3-flame-graph/dist/d3-flamegraph.css">
+    <style>
+        .container {
+          padding: 0px 2em;
+        }
+        body {
+          font-family: "Arial";
+        }
+        .monospace {
+          font-family: "monospace";
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1><span class="monospace">nflxprofile</span> FlameGraph</h1>
+      <div>
+        <label>
+          Load a <span class="monospace">.nflxprofile</span> <small>(don't worry, it won't leave your machine)</small>
+        </label>
+        <input disabled id="loadFile" type=file>
+      </div>
+      <div id="message">
+      </div>
+      <div id="chart"></div>
+    </div>
+
+    <script type="text/javascript" src="/build/parse.js"></script>
+    <script type="text/javascript" src="/node_modules/d3/dist/d3.min.js"></script>
+    <script type="text/javascript" src="/node_modules/d3-tip/dist/index.js"></script>
+    <script type="text/javascript" src="/node_modules/d3-flame-graph/dist/d3-flamegraph.min.js"></script>
+
+    <script type="text/javascript">
+    </script>
+
+    <script>
+      'use strict'
+
+      async function main(M) {
+        const loadFileInput = document.querySelector("#loadFile");
+        const message = document.querySelector("#message");
+
+        loadFileInput.addEventListener('change', async (event) => {
+          message.text = "Loading"
+          loadFileInput.disabled = true;
+          try {
+            const oldFlamegraph = document.querySelector('#chart svg');
+            if (oldFlamegraph) oldFlamegraph.remove();
+            const file = event.target.files[0];
+            const size = file.size;
+            const base = M._malloc(size);
+            const reader = file.stream().getReader();
+            let reading = true;
+            let offset = 0;
+            while (reading) {
+              const { done, value } = await reader.read();
+              if (done) break;
+
+              M.writeArrayToMemory(value, base + offset)
+              offset += value.length
+            }
+            const s = M._parse(base, size)
+            const profile = JSON.parse(M.AsciiToString(s));
+            M._free(s);
+            const flamegraph = d3.flamegraph()
+                .selfValue(true)
+                .minFrameSize(5);
+
+            d3.select("#chart")
+              .datum(profile)
+              .call(flamegraph);
+            message.text = ""
+          } catch(err) {
+            console.error(err);
+            message.text = "Failed to load FlameGraph"
+          } finally {
+            loadFileInput.disabled = false;
+          }
+        });
+        loadFileInput.disabled = false;
+      }
+      NflxprofileParse().then((M) => {
+        main(M)
+      })
+    </script>
+  </body>
+</html>
