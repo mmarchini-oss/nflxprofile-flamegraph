@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/mmarchini/nflxprofile-flamegraph.git"
   },
-  "author": "Matheus Marchini <mmarchini@netflix.com>",
+  "author": "Mary Marchini <mmarchini@netflix.com>",
   "license": "Apache",
   "bugs": {
     "url": "https://github.com/mmarchini/nflxprofile-flamegraph/issues"
