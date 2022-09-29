@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/mmarchini/nflxprofile-flamegraph#readme",
   "dependencies": {
-    "d3": "^5.14.2",
-    "d3-flame-graph": "^2.1.8"
+    "d3": "^7.6.1",
+    "d3-flame-graph": "^4.1.3"
   }
 }
